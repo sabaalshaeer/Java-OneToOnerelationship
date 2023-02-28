@@ -1,0 +1,32 @@
+#docker : containization platform
+#allowes devs to create and share containers
+#container: little sibling to a virtual machine
+#		  : deduplicated virtual machine
+#virtual machine : emulate on OS withing a running OS
+#why do we want to run virtual machine in the first place?
+#   security, Isolation, Backup,Replication
+
+# yml : markup language
+
+# docker-compose - Allows us to easily manage multiple docker container
+
+
+
+version: '3'
+
+services:
+ db: # this is just a name
+  image: 'postgres:latest' # the container that I want to copy
+  # image- a sharable file that a container can be created from
+  ports:
+    - "5432:5432" #right port for the real computer and the left port for the container
+                  #local host 5432 will connect to the postgres since runing on the virtual machine in 5432
+  environment: # set environment variable in the container/you can configure what you create by using environment variables
+               #in this case , postgres will look this POSTGRES_USER environment variable and whatever the value is it that will be the default username that we can login to our postgres same with password and dB name
+    POSTGRES_USER: username
+    POSTGRES_PASSWORD: password
+    POSTGRES_DB: postgres
+  volumes: #path, within the db folder we want to create the data folder will have all the same content , the content inside this directory /var/lib/postgresql/data, that is inside of the container
+           #the : seperate the real file system to the container`s file system
+           #the /data will be created and have all the data that make the postgres to run
+    - ./data:/var/lib/postgresql/data
